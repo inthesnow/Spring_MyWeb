@@ -82,4 +82,18 @@ public class FreeBoardController {
 		}
 		return "redirect:/freeBoard/freeList";
 	}
+	
+	//글업데이트 처리
+	@RequestMapping("/freeUpdate")
+	public String freeUpdate() {
+		
+		/*
+		 * 1. form에서 넘어오는 값을 받습니다.
+		 * 2. update()를 이용해서 게시글을 수정처리합니다.
+		 * 3. update()메서드는 성공 or실패의 결과를 받아옵니다.
+		 * 4. list화면으로 msg담아서 이동 
+		 */
+		
+		return null;
+	}
 }
