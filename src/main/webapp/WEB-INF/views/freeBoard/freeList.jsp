@@ -1,5 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <section>
         <div class="container-fluid">
             <div class="row">
@@ -12,17 +14,17 @@
                     
                     <!--form select를 가져온다 -->
                     <form>
-		    <div class="search-wrap">
-                       <button type="button" class="btn btn-info search-btn">검색</button>
-                       <input type="text" class="form-control search-input">
-                       <select class="form-control search-select">
-                            <option>제목</option>
-                            <option>내용</option>
-                            <option>작성자</option>
-                            <option>제목+내용</option>
-                       </select>
-                    </div>
-		    </form>
+			    		<div class="search-wrap">
+	                       <button type="button" class="btn btn-info search-btn">검색</button>
+	                       <input type="text" class="form-control search-input">
+	                       <select class="form-control search-select">
+	                            <option>제목</option>
+	                            <option>내용</option>
+	                            <option>작성자</option>
+	                            <option>제목+내용</option>
+	                       </select>
+	                    </div>
+			  		</form>
                    
                     <table class="table table-bordered">
                         <thead>
@@ -35,27 +37,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                           <c:forEach var="vo" items="${list }">
                             <tr>
-                                <td>1</td>
-                                <td><a href="##">첫글</a></td>
-                                <td>홍길순</td>
-                                <td>~~~~~</td>
-                                <td>~~~~~</td>
+                                <td>${vo.bno}</td>
+                                <td><a href="freeDetail?bno">${vo.title}</a></td>
+                                <td>${vo.writer}</td>
+                                <td>
+									<fmt:formatDate value="${vo.regdate }" pattern="yyy-MM-dd HH:mm:ss"/>                                </td>
+                                <td>
+                                	<fmt:formatDate value="${vo.updatedate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td><a href="##">두글</a></td>
-                                <td>홍길순</td>
-                                <td>~~~~~</td>
-                                <td>~~~~~</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td><a href="##">세글</a></td>
-                                <td>홍길순</td>
-                                <td>~~~~~</td>
-                                <td>~~~~~</td>
-                            </tr>
+                            </c:forEach>
                         </tbody>
                         
                     </table>
@@ -82,6 +75,19 @@
             </div>
         </div>
 	</section>
+	<script>
+		window.onload=function() {
+			
+			if(history.state=='') return;//메세지를 출력했다면 함수종료
+			
+			var mag = '<c:out value="${msg}" />';
+			if(msg!='') {
+				alert(msg);
+				history.replaceState('', null, null);//브라우저 기록컨트롤(추가할 데이터, 제목, url주소)
+				console.log(history.state);
+			}
+		}
+	</script>
 
 
 

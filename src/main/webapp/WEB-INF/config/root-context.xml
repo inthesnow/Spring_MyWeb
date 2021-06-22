@@ -3,8 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -28,14 +30,13 @@
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
-
 		<!-- xml매퍼의 위치 지정 -->
-		<!-- <property name="mapperLocations" value="classpath:/sqlmap/*.xml"/> -->
-		<!-- 마이바티스 xml 설정 위치지정 -->
-		<property name="configLocation" value="classpath:/mybatis-config/mybatis-config.xml"/>
+		<property value="classpath:/sqlmap/*.xml" name="mapperLocations"/>
+		<!-- 마이바티스 xml설정의 위치 지정 -->
+		<property value="classpath:/mybatis-config/mybatis-config.xml" name="configLocation"/>
 	</bean>
 	
 	<!-- 마이바티스의 인터페이스를 읽어서 사용할수 있도록 처리 -->
-	<mybatis-spring:scan base-package="com.team404.mapper"/>
+	<mybatis-spring:scan base-package="com.team404.*.mapper"/>
 		
 </beans>
