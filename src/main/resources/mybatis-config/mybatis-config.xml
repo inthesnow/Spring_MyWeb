@@ -5,6 +5,6 @@
   
   <configuration>
   	<typeAliases>
-
+		<typeAlias type="com.team404.command.FreeBoardVO" alias="FreeBoardVO"/>
   	</typeAliases>
   </configuration>
