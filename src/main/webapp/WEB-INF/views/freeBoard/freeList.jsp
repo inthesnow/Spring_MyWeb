@@ -113,6 +113,8 @@
 	<script>
 		//페이지처리-
 		//모든 a를 눌렀을 때 a가 가지고 있는 pageNum값을 가지고form태그로 이동하도록 처리
+		//동적 쿼리문을 이용해서 sql문을 변경
+		//화면에 검색키워드가 남겨지도록처리
 		var pagination = document.querySelector(".pagination");
 		pagination.onclick = funtion() {
 			event.preventDefault();//고유이벤트 속성 중지
