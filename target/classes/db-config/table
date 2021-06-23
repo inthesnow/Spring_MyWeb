@@ -37,3 +37,19 @@ create table freeboard(
 );
 
 create SEQUENCE freeboard_seq INCREMENT by 1 start with 1 nocache;
+
+--더비데이터생성
+declare
+    varl number := 1;
+begin
+    while varl <= 100
+    loop
+    insert INTO Freeboard(bno,writer,title,content) values(Freeboard_seq.NEXTVAL, 'test1', 'test1','test1'); 
+    insert INTO Freeboard(bno,writer,title,content) values(Freeboard_seq.NEXTVAL, 'admin', 'admin','admin');
+    insert INTO Freeboard(bno,writer,title,content) values(Freeboard_seq.NEXTVAL, 'dev', 'dev','dev');
+                
+        varl := varl+1;
+    end loop;
+                
+    COMMIT;       
+end;

@@ -16,7 +16,6 @@ public class Criteria {
 	}
 
 	public Criteria(int pageNum, int amount) {
-		super();
 		this.pageNum = pageNum;
 		this.amount = amount;
 	}

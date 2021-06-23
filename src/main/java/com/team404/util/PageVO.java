@@ -30,7 +30,7 @@ public class PageVO {
 		
 		//시작페이지번호
 		//끝페이지-보여질페이지수 +1
-		this.startPage = this.endPage +1;
+		this.startPage = this.endPage-10 +1;
 		
 		//실제 마지막 번호 페이지
 		//ex) 게시클이 53일떄 > 끝번호는 6

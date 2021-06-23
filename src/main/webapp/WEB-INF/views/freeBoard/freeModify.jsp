@@ -9,7 +9,7 @@
                             <p>수정하기</p>
                         </div>
                         
-                        <form>
+                        <form action="freeUpdate" method="post">
                             <div>
                                 <label>DATE</label>
                                 <p><fmt:formatDate value="${boardVO.regdate }" pattern="yyyy년MM월dd일"/></p>
@@ -34,7 +34,7 @@
 
                             <button type="button" class="btn btn-dark" onclick="location.href='freeList'">목록</button>    
                             <button type="submit" class="btn btn-primary">변경</button>
-                            <button type="button" class="btn btn-info">삭제</button>
+                            <button type="button" class="btn btn-info" onclick="location.href='freeDelete?bno=${boardVO.bno}'">삭제</button>
                     </form>
                                     
                 </div>

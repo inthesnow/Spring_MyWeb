@@ -17,31 +17,30 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	public int regist(FreeBoardVO vo) {
 		return freeMapper.regist(vo);
 	}
+	
 	@Override
 	public ArrayList<FreeBoardVO> getList(Criteria cri) {
-		// TODO Auto-generated method stub
 //		System.out.println(freeMapper.getList().size() + "   사이브");
-		return freeMapper.getList(cri);
-	
+		return freeMapper.getList(cri);	
 	}
+	
 	@Override
 	public FreeBoardVO getDetail(int bno) {
 		return freeMapper.getDetail(bno);
-		// TODO Auto-generated method stub
-		
 	}
+	
 	@Override
 	public int update(FreeBoardVO vo) {
 		return freeMapper.update(vo);
 	}
+	
 	@Override
 	public int delete(int bno) {
-		// TODO Auto-generated method stub
 		return freeMapper.delete(bno);
 	}
+	
 	@Override
 	public int getTotal(Criteria cri) {
-		// TODO Auto-generated method stub
 		return freeMapper.getTotal(cri);
 	}
 

@@ -45,7 +45,7 @@
                            <c:forEach var="vo" items="${list }">
                             <tr>
                                 <td>${vo.bno}</td>
-                                <td><a href="freeDetail?bno">${vo.title}</a></td>
+                                <td><a href="freeDetail?bno=${vo.bno }">${vo.title}</a></td>
                                 <td>${vo.writer}</td>
                                 <td>
 									<fmt:formatDate value="${vo.regdate }" pattern="yyy-MM-dd HH:mm:ss"/>                                </td>
@@ -69,8 +69,11 @@
                     	<c:if test="${pageVO.prev }">
                         <li><a href="#" data-pagenum="${pageVO.startPage-1 }">이전</a></li>
                     	</c:if>
-                        <c:forEach var="num" begin="${pageVO.startPage }" end="${pageVO.endPage }">
-                        <li  class="#" data-pagenum="${num }">${num }</a></li>
+                    	
+                        <c:forEach var="num" begin="${pageVO.startPage }" end="${pageVO.endPage }" >
+                        <li class="${pageVO.pageNum eq num ? 'active' : '' }">
+                        	<a href="#" data-pagenum="${num }">${num }</a>
+                        </li>
                         </c:forEach>
                        
                     <!-- 3. 다음버튼 활성화여부 -->
@@ -116,7 +119,7 @@
 		//동적 쿼리문을 이용해서 sql문을 변경
 		//화면에 검색키워드가 남겨지도록처리
 		var pagination = document.querySelector(".pagination");
-		pagination.onclick = funtion() {
+		pagination.onclick = function() {
 			event.preventDefault();//고유이벤트 속성 중지
 			if(event.target.tagName !='A') return; //A가아니라면 종료
 			

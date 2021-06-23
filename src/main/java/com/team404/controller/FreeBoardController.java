@@ -45,6 +45,7 @@ public class FreeBoardController {
 		
 		
 		System.out.println(cri.toString());
+		System.out.println(pageVO.toString());
 		
 		model.addAttribute("pageVO",pageVO); //페이지네이션 전달
 		model.addAttribute("list",list);
@@ -52,18 +53,19 @@ public class FreeBoardController {
 		return "freeBoard/freeList";
 	}
 	
+	//상세화면과 변경화면은 동일함으로 묶어서 사용
 	@RequestMapping({"/freeDetail","/freeModify"})
 	public void getDetail( @RequestParam("bno") int bno, Model model) {
 		//getdetail();
 		//sql문을 이용해서 FreeBoardVo에 결과값을 반환
-		//화면에서 사영할 수 있도록 boardVo 이름으로 modelㅂ전환
+		//화면에서 사영할 수 있도록 boardVo 이름으로 model전달하고, 화면에 처리
 		FreeBoardVO boardVo = freeService.getDetail(bno);
-		model.addAttribute("vo", boardVo);
+		model.addAttribute("boardVO", boardVo);
 	}
 	
 	@RequestMapping("/registForm")
 	public String registForm(FreeBoardVO vo , RedirectAttributes Ra) {
-		int result = freeService.regist(vo);
+		int result = freeService.regist(vo); //성공시 1, 실패시 0 반환
 		
 		if(result ==1) {
 			Ra.addFlashAttribute("msg", "등록처리되었습니다");
@@ -77,9 +79,18 @@ public class FreeBoardController {
 	
 	@RequestMapping("/freeUpdate")
 	public String freeUpdate(FreeBoardVO vo, RedirectAttributes Ra) {
-		int  ttt= freeService.update(vo);
 		
-		if(ttt ==1) {
+		/*
+		 * 1. form에서 넘어오는 값을 받습니다.
+		 * 2. update()를 이용해서 게시글을 수정처리 합니다.
+		 * 3. update()메서드는 성공 or 실패의 결과를 받아옵니다.
+		 * 4. list화면으로 msg담아서 이동
+		 * 
+		 */
+		
+		int  result= freeService.update(vo);
+		
+		if(result ==1) {
 			Ra.addFlashAttribute("msg", "등록처리되었습니다");
 			
 		}else {
@@ -90,9 +101,7 @@ public class FreeBoardController {
 	
 	@RequestMapping({"/freeDelete"})
 	public String getDelete( @RequestParam("bno") int bno, RedirectAttributes Ra) {
-		//getdetail();
-		//sql문을 이용해서 FreeBoardVo에 결과값을 반환
-		//화면에서 사영할 수 있도록 boardVo 이름으로 modelㅂ전환
+		
 		int result = freeService.delete(bno);
 		if(result ==1) {
 			Ra.addFlashAttribute("msg", "삭제성공");

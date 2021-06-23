@@ -29,14 +29,14 @@
 			<if test="searchType=='titcont'">title like '%'||#{searchName}||'%' or title like '%'||{searchName}||'%'</if>
 			<if test="searchType==null or searchType==''">1=1</if> 
 			-->
+			
 			<choose>
-				<when test="searchType==title">title like '%'||#{searchName}||'#"</when>
+				<when test="searchType=='title'">title like '%'||#{searchName}||'%'</when>
 				<when test="searchType=='writer'">writer like '%'||#{searchName}||'%'</when>
 				<when test="searchType=='content'">content like '%'||#{searchName}||'%'</when>
 				<when test="searchType=='titcont'">title like '%'||#{searchName}||'%' or title like '%'||{searchName}||'%'</when>
 				<otherwise>1=1</otherwise>
 			</choose>
-			
 		<![CDATA[
 				order by bno desc ) a
 		)
