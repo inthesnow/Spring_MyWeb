@@ -1,0 +1,39 @@
+--계정생성
+create user spring identified by spring;
+
+--권한부여
+grant resource, connect to spring;
+
+--테이블스페이스 지정
+alter user spring DEFAULT TABLESPACE users quota UNLIMITED on users;
+
+create table T_SCORE(
+    bno number(10) primary key,
+    name varchar2(20),
+    kor varchar2(20),
+    eng varchar2(20)
+);
+
+create SEQUENCE T_SCORE_SEQ INCREMENT BY 1 START WITH 1 NOCACHE;
+
+
+-- T_BOARD
+create table T_BOARD(
+    bno number(10) primary key,
+    name varchar2(20),
+    title varchar2(20),
+    content varchar2(20)
+);
+
+create sequence T_BOARD_SEQ increment by 1 start with 1 nocache;
+
+create table freeboard(
+    bno number(10, 0) primary key,
+    title varchar2(200) not null,
+    writer varchar2(200) not null,
+    content varchar2(2000) not null,
+    regdate date default sysdate,
+    updatedate date default sysdate
+);
+
+create SEQUENCE freeboard_seq INCREMENT by 1 start with 1 nocache;
