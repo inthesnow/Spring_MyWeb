@@ -176,6 +176,12 @@
 			<artifactId>tiles-extras</artifactId>
 			<version>3.0.8</version>
 		</dependency>
+		<!-- Rest API에서 객체를 JSON형태로변환하는라이브러리 -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.10.0</version>
+		</dependency>
 	</dependencies>
     <build>
         <plugins>
