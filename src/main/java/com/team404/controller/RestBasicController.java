@@ -1,9 +1,11 @@
 package com.team404.controller;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.velocity.texen.ant.TexenTask;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,4 +80,35 @@ public class RestBasicController {
 		
 		return list;
 	}
+	/////////////////////////////
+	@CrossOrigin(origins = "*")//서로다른서버에 대하여 허용
+	//consumes - json으로 보내라
+	//produces = json으로 보낸다 (application/xml) - 둘다 생략가능
+	@PostMapping(value = "/getAjax", consumes = "application/json", produces = "appliaction/json")
+	public ArrayList<TestVO> getAjax(@RequestBody TestVO vo) {
+		System.out.println(vo.toString());
+		
+		ArrayList<TestVO> list = new ArrayList<TestVO>();
+		TestVO t = new TestVO("이순신", "20", "2000", 20);
+		list.add(t);
+		
+		return list;
+	}
+	
+	//xml형식으로 반환 (jackson-xml라이브러리가 반드시필요)
+	@CrossOrigin(origins = "*")
+	//consumes - json으로 보내라
+	//produces - xml로 반환하다.
+	@PostMapping(value = "/getXML", consumes = "application/json", produces = "appliaction/json")
+	public ArrayList<TestVO> getXML(@RequestBody TestVO vo) {
+		System.out.println(vo.toString());
+		
+		ArrayList<TestVO> list = new ArrayList<TestVO>();
+		TestVO t = new TestVO("이순신", "20", "2000", 20);
+		list.add(t);
+		
+		return list;
+	}
+	
+
 }

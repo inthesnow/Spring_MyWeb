@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.team404.reply.mapper.ReplyMapper">
+  	<insert id="regist">
+  		insert into FreeReply(rno, bno, reply, replyId, replyPw)
+  		values (FreeReply_seq.nextval, #{bno}, #{reply}, #{replyId}, #{replyPw})
+  	</insert>
+  	<select id="getList" resultType="FreeReplyVO">
+  		select bno, rno, reply, replyId, replyDate, updateDate from FreeReply where bno=#{bno} order by rno desc
+  	</select>
+  </mapper>

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <link href="${pageContext.request.contextPath }/resources/css/bootstrap.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/jquery.js"></script>
     <!--개인 디자인 추가-->
     <link href="${pageContext.request.contextPath }/resources/css/style.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath }/resources/js/bootstrap.js"></script>
@@ -17,5 +17,9 @@
 	<!-- user화면 템플릿 -->
 	<tiles:insertAttribute name="header"/>
 	<tiles:insertAttribute name="body"/>
+	
+	<script>
+	
+	</script>
 </body>
 </html>

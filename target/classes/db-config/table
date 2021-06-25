@@ -27,6 +27,7 @@ create table T_BOARD(
 
 create sequence T_BOARD_SEQ increment by 1 start with 1 nocache;
 
+--오라클 게시글
 create table freeboard(
     bno number(10, 0) primary key,
     title varchar2(200) not null,
@@ -38,7 +39,7 @@ create table freeboard(
 
 create SEQUENCE freeboard_seq INCREMENT by 1 start with 1 nocache;
 
---더비데이터생성
+--더미데이터생성
 declare
     varl number := 1;
 begin
@@ -53,3 +54,16 @@ begin
                 
     COMMIT;       
 end;
+
+--댓글테이블
+create table freeReply(
+    rno number(10) primary key,
+    bno number(10),
+    reply varchar2(1000),
+    replyId VARCHAR2(200),
+    replyPw VARCHAR2(200),
+    replyDate date default sysdate,
+    updatedate date default SYSDATE
+);
+
+create SEQUENCE freereply_seq increment by 1 start with 1 nocache;

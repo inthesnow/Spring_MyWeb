@@ -51,14 +51,14 @@
                             </div>
                             <!--form-control은 부트스트랩의 클래스입니다-->
 	                    <div class="reply-content">
-	                        <textarea class="form-control" rows="3"></textarea>
+	                        <textarea class="form-control" rows="3" name="reply" id="reply"></textarea>
 	                        <div class="reply-group">
 	                              <div class="reply-input">
-	                              <input type="text" class="form-control" placeholder="이름">
-	                              <input type="password" class="form-control" placeholder="비밀번호">
+	                              <input type="text" class="form-control" placeholder="이름" name="replyId" id="replyId">
+	                              <input type="password" class="form-control" placeholder="비밀번호" name="replyPw" id="replyPw">
 	                              </div>
 	                              
-	                              <button type="button" class="right btn btn-info">등록하기</button>
+	                              <button type="button" class="right btn btn-info" id="replyRegist">등록하기</button>
 	                        </div>
 	
 	                    </div>
@@ -66,7 +66,7 @@
 
                         <!--여기에접근 반복-->
                         <div id="replyList">
-                        <div class='reply-wrap'>
+                        <!-- <div class='reply-wrap'>
                             <div class='reply-image'>
                                 <img src='../resources/img/profile.png'>
                             </div>
@@ -79,7 +79,7 @@
                                 </div>
                                 <p class='clearfix'>여기는 댓글영역</p>
                             </div>
-                        </div>
+                        </div> -->
                         </div>
                     </div>
                 </div>
@@ -112,3 +112,70 @@
 			</div>
 		</div>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			//등록이벤트
+			$("#replyRegist").click(function() {
+				var bno = "${boardVO.bno}";
+				var reply = $("#reply").val();
+				var replyId = $("#replyId").val();
+				var replyPw = $("#replyPw").val();
+				
+				
+				if(reply ==''|| replyId==''||replyPw==''){
+					alert("이름, 비밀번호, 내용은 필수입니다.");
+					return;//함수종료
+				}
+				
+				$.ajax({
+					type : "post",
+					url : "../reply/replyRegist",
+					dataType : "json",
+					contentType : "application/json; charset=UTF-8",
+					data : JSON.stringify({"bno":bno,"reply":reply,"replyId":replyId,"replyPw":replyPw}),
+					success : function(data) {
+						if(data==1) {
+							$("#reply").val("");
+							$("#replyId").val("");
+							$("#replyPw").val("");
+							
+						} else{
+							alert("등록에 실패했습니다. 다시 시도 해주세요");
+						}
+					},
+					error : function(status, error) {
+						alert("등록 실패입니다. 잠시 후에 다시 시도하세요");
+					}
+					
+				});
+			})
+			getList();//데이터 조회 메서드 호출
+			//데이터 조회
+			function getList() {
+				var bno = "${boardVO.bno}";//게시글번호
+				var pageNum=1;//페이지번호
+				$.getJSON("../reply/getList/"+bno+"/"+pageNum, function(data) {
+					//콜백영역
+					console.log(data);
+					
+					//누적할 문자열을 만들고 innerHTML형식으로 replyList아래에 삽입
+					/*
+					<div class='reply-wrap'>
+                    <div class='reply-image'>
+                        <img src='../resources/img/profile.png'>
+                    </div>
+                    <div class='reply-content'>
+                        <div class='reply-group'>
+                            <strong class='left'>honggildong</strong> 
+                            <small class='left'>2019/12/10</small>
+                            <a href='#' class='right'><span class='glyphicon glyphicon-pencil'></span>수정</a>
+                            <a href='#' class='right'><span class='glyphicon glyphicon-remove'></span>삭제</a>
+                        </div>
+                        <p class='clearfix'>여기는 댓글영역</p>
+                    </div>
+                    */
+				})
+			}
+		});//end ready
+	</script>
