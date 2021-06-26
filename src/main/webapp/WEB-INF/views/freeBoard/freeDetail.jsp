@@ -66,7 +66,8 @@
 
                         <!--여기에접근 반복-->
                         <div id="replyList">
-                        <!-- <div class='reply-wrap'>
+                        <!-- 
+                        <div class='reply-wrap'>
                             <div class='reply-image'>
                                 <img src='../resources/img/profile.png'>
                             </div>
@@ -79,7 +80,8 @@
                                 </div>
                                 <p class='clearfix'>여기는 댓글영역</p>
                             </div>
-                        </div> -->
+                        </div>
+						-->
                         </div>
                     </div>
                 </div>
@@ -139,7 +141,6 @@
 							$("#reply").val("");
 							$("#replyId").val("");
 							$("#replyPw").val("");
-							
 						} else{
 							alert("등록에 실패했습니다. 다시 시도 해주세요");
 						}
@@ -149,6 +150,7 @@
 					}
 					
 				});
+				getList();//댓글등록시 바로 보여줘
 			})
 			getList();//데이터 조회 메서드 호출
 			//데이터 조회
@@ -158,23 +160,27 @@
 				$.getJSON("../reply/getList/"+bno+"/"+pageNum, function(data) {
 					//콜백영역
 					console.log(data);
+					var str = "";
 					
+					for(var i=0; i<data.length;i++){	
 					//누적할 문자열을 만들고 innerHTML형식으로 replyList아래에 삽입
-					/*
-					<div class='reply-wrap'>
-                    <div class='reply-image'>
-                        <img src='../resources/img/profile.png'>
-                    </div>
-                    <div class='reply-content'>
-                        <div class='reply-group'>
-                            <strong class='left'>honggildong</strong> 
-                            <small class='left'>2019/12/10</small>
-                            <a href='#' class='right'><span class='glyphicon glyphicon-pencil'></span>수정</a>
-                            <a href='#' class='right'><span class='glyphicon glyphicon-remove'></span>삭제</a>
-                        </div>
-                        <p class='clearfix'>여기는 댓글영역</p>
-                    </div>
-                    */
+					str += "<div class='reply-wrap'>";
+                    str += "	<div class='reply-image'>";
+                    str += "	    <img src='../resources/img/profile.png'>";
+                    str += "	</div>";
+                    str += "	<div class='reply-content'>";
+                    str += "		<div class='reply-group'>";
+                    str += "			<strong class='left'>"+data[i].replyId+"</strong> ";
+                    str += "			<small class='left'>"+data[i].replyDate+"</small>";
+                    str += "		  	<a href='#' class='right'><span class='glyphicon glyphicon-pencil'></span>수정</a>";
+                    str += "		   	<a href='#' class='right'><span class='glyphicon glyphicon-remove'></span>삭제</a>";
+                    str += "		</div>";
+                    str += "		<p class='clearfix'>"+data[i].reply+"</p>";
+                    str += "	</div>";
+                    str += "</div>";
+                    
+                    $("#replyList").html(str);
+					}
 				})
 			}
 		});//end ready
