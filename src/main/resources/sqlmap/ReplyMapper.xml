@@ -9,6 +9,36 @@
   		values (FreeReply_seq.nextval, #{bno}, #{reply}, #{replyId}, #{replyPw})
   	</insert>
   	<select id="getList" resultType="FreeReplyVO">
-  		select bno, rno, reply, replyId, replyDate, updateDate from FreeReply where bno=#{bno} order by rno desc
+  	<![CDATA[
+  		SELECT *
+		FROM ( SELECT rownum rn,
+            		  a.*,
+       				  case when gap <= 60 then '방금전'
+            			   when gap <= 60*24 then trunc(gap/60) || '시간전'
+            		  else to_char(replyDate, 'YYYY-MM-DD')
+       				  end as timegap
+		FROM (select bno,
+             		 rno,
+            		 reply,
+             		 replyId,
+             		 replyDate,
+             		 updateDate,
+             		 trunc((sysdate-replyDate)*24*60) as gap
+        from FreeReply where bno=#{bno} order by rno desc
+    ) a
+)where rn > (#{cri.pageNum}-1) *#{cri.amount} and rn <= #{cri.pageNum} * #{cri.amount}
+  	]]>
   	</select>
+  	<select id="getTotal" resultType="int">
+  		select count(*) as total from FreeReply where bno = #{bno}
+  	</select>
+  	<select id="pwCheck" resultType="int">
+  		select count(*) as count from freeReply where rno = #{rno} and replyPw=#{replyPw}
+  	</select>
+  	<update id="update">
+  		update FreeReply set reply = #{reply}, updateDate=sysdate where rno=#{rno}
+  	</update>
+  	<delete id="delete">
+		delete from FreeReply where rno = #{rno}
+	</delete>
   </mapper>
