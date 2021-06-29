@@ -74,6 +74,7 @@
                             <div class='reply-content'>
                                 <div class='reply-group'>
                                     <strong class='left'>honggildong</strong> 
+                       
                                     <small class='left'>2019/12/10</small>
                                     <a href='#' class='right'><span class='glyphicon glyphicon-pencil'></span>수정</a>
                                     <a href='#' class='right'><span class='glyphicon glyphicon-remove'></span>삭제</a>
