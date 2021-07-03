@@ -29,7 +29,11 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userMapper.login(vo);
 	}
-	
-	
+
+	@Override
+	public UserVO getInfo(String userId) {
+		// TODO Auto-generated method stub
+		return userMapper.getInfo(userId);
+	}
 	
 }

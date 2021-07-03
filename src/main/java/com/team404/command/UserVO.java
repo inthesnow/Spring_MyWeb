@@ -1,6 +1,7 @@
 package com.team404.command;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +21,7 @@ public class UserVO {
 	private String addrDetail;
 	private Timestamp regdate;
 	
+	//N관계의 테이블 list형태로 선언
+	private ArrayList<FreeBoardVO> userBoardList;
+
 }

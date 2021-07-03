@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team404.command.UserVO;
@@ -32,6 +33,8 @@ public class UserController {
 	public String userJoin() {
 		return "user/userJoin";
 	}
+	
+	//로그인화면
 	@RequestMapping("/userLogin")
 	public String userLogin() {
 		return "user/userLogin";
@@ -39,7 +42,16 @@ public class UserController {
 	
 	//마이페이지화면
 	@RequestMapping("/userMypage")
-	public String userMypage() {
+	public String userMypage(HttpSession session) {
+		
+//		if(session.getAttribute("userVO")==null)
+//			return "redirect:/user/userLogin";
+	
+		UserVO userVO = (UserVO)session.getAttribute("userVO");
+		String userId = userVO.getUserId();
+		
+		UserVO userInfo = userService.getInfo(userId);
+		
 		return "user/userMypage";
 	}
 	
@@ -67,19 +79,41 @@ public class UserController {
 	}
 	
 	//로그인 요청
-	@RequestMapping(value = "/loginForm", method = RequestMethod.POST)
-	public String loginForm(UserVO vo, HttpSession session, Model model) {
-		//로그인 처리
+//	@RequestMapping(value = "/loginForm", method = RequestMethod.POST)
+//	public String loginForm(UserVO vo, HttpSession session, Model model) {
+//		//로그인 처리
+//		UserVO userVO = userService.login(vo);
+//		System.out.println(userVO);
+//		
+//		if(userVO !=null) {//로그인성공
+//			session.setAttribute("userVO", userVO);
+//			return "redirect:/";			
+//		} else { //로그인 실패
+//			model.addAttribute("mgs", "아이디 비밀번호를 확인하세요");
+//			return "user/userLogin";
+//		}	
+//	}
+
+	@RequestMapping(value = "/loginForm", method=RequestMethod.POST)
+	public ModelAndView loginForm(UserVO vo) {
 		UserVO userVO = userService.login(vo);
-		System.out.println(userVO);
 		
-		if(userVO !=null) {//로그인성공
-			session.setAttribute("userVO", userVO);
-			return "redirect:/";			
+		ModelAndView mv = new ModelAndView();
+		
+		if(userVO != null) {//로그인성공
+			mv.addObject("login", userVO);
 		} else { //로그인 실패
-			model.addAttribute("mgs", "아이디 비밀번호를 확인하세요");
-			return "user/userLogin";
+			mv.addObject("msg", "아이디 비밀번호를 확인하세요");
 		}
 		
+		return mv;//디스패쳐 서블릿으로 반환
+	}
+	
+	//로그아웃
+	@RequestMapping("/userLogout")
+	public String logout(HttpSession session) {
+		session.invalidate();//세션 무효화
+		
+		return "redirect:/";
 	}
 }

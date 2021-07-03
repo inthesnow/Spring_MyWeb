@@ -81,7 +81,9 @@
                         <li><a href="#" data-pagenum="${pageVO.endPage+1 }">다음</a></li>
                         </c:if>
                     </ul>
+                    <c:if test="${sessionScope.userVO !=null }">
                     <button type="button" class="btn btn-info" onclick="location.href='freeRegist'">글쓰기</button>
+                    </c:if>
                     </div>
 					
 					<input type="hidden" name="pageNum" value="${pageVO.cri.pageNum }">
