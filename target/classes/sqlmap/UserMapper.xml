@@ -16,7 +16,7 @@
   		select * from users where userId = #{userId} and userPw = #{userPw}
   	</select>
   	<!-- 1:N테이블의 조인구문에서는 select의 반환 결과를 resultMap속성을 이용해서 직접지정 -->
-  	<select id="getInfo" resultType="userInfo">
+  	<select id="getInfo" resultMap="userInfo">
   		select userId,
 		       userName,
        		   userEmail1,
@@ -34,20 +34,21 @@
   	</select>
   	
   	<!-- resultMap태그에서는 vo의 맵핑형태를 처리. -->
+  	<!-- type에는 결과를 반환받을 vo의 전체경로, id는 위에서 지정한 resultMap의 이름 -->
   	<!-- property에는 vo객체의 setter, colume에는 DB의 컬럼명이 들어갑니다. -->
-  	<resultMap type="UserVO" id="userInfo">
-  		<result property="userId" column="USERID"/>
-  		<result property="userName" column="USERNAME"/>
-  		<result property="userEmail2" column="USEREMAIL1"/>
-  		<result property="userEmail2" column="USEREMAIL2"/>
-  		<result property="addrZipNum" column="ADDRZIPNUM"/>
-  		<result property="addrBasic" column="ADDRBASIC"/>
-  		<result property="addrDetail" column="ADDRDETAIL"/>
-  		<collection property="userBoardList" resultMap="boardList"/>
-  	</resultMap>
-  	<resultMap type="FreeBoardVO" id="boardList">
-  		<result property="bno" column="BNO"/>
-  		<result property="title" column="TITLE"/>
-  		<result property="regdate" column="REGDATE"/>
-  	</resultMap>
+	<resultMap id="userInfo" type="UserVO">
+		<result column="USERID" property="userId" />
+		<result column="USERNAME" property="userName" />
+		<result column="USEREMAIL1" property="userEmail1" />
+		<result column="USEREMAIL2" property="userEmail2" />
+		<result column="ADDRZIPNUM" property="addrZipNum" />
+		<result column="ADDRBASIC" property="addrBasic" />
+		<result column="ADDRDETAIL" property="addrDetail" />
+		<collection resultMap="boardList" property="userBoardList" />
+	</resultMap>
+	<resultMap id="boardList" type="FreeBoardVO">
+		<result column="BNO" property="bno" />
+		<result column="TITLE" property="title" />
+		<result column="REGDATE" property="regdate" />
+	</resultMap>
   </mapper>

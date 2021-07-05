@@ -42,7 +42,7 @@ public class UserController {
 	
 	//마이페이지화면
 	@RequestMapping("/userMypage")
-	public String userMypage(HttpSession session) {
+	public String userMypage(HttpSession session, Model model) {
 		
 //		if(session.getAttribute("userVO")==null)
 //			return "redirect:/user/userLogin";
@@ -51,6 +51,7 @@ public class UserController {
 		String userId = userVO.getUserId();
 		
 		UserVO userInfo = userService.getInfo(userId);
+		model.addAttribute("userInfo", userInfo); //결과 추가
 		
 		return "user/userMypage";
 	}

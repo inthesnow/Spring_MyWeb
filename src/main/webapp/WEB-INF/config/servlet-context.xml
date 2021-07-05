@@ -41,4 +41,11 @@
 	<context:component-scan base-package="com.team404.controller" />
 	<context:component-scan base-package="com.team404.*.service" />	
 	
+	<!-- 파일 업로드 최소 설정 (아이디 반드시 multipartResolver) -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 파일업로드 최대사이즈 -->
+		<beans:property name="maxUploadSize" value="52428800"/>
+		<!-- 인코딩설정 -->
+		<beans:property name="defaultEncoding" value="utf-8"/>
+	</beans:bean>
 </beans:beans>

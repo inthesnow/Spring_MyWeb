@@ -84,7 +84,7 @@
                         </div>
 						-->
                         </div>
-                        <button tpye="button" class="btn btn-default" id="moreList">더보기</button>
+                        <button type="button" class="btn btn-default" id="moreList">더보기</button>
                     </div>
                 </div>
             </div>
