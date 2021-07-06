@@ -1,0 +1,12 @@
+create table snsboard (
+    bno number(10) primary key,
+    writer varchar2(50) not null,
+    content varchar2(2000),
+    uploadpath varchar2(100) not null,
+    fileloca varchar2(100) not null,
+    filename varchar2(100) not null,
+    fileralname varchar2(100) not null,
+    regdate date default sysdate
+);
+
+create sequence snsboard_seq INCREMENT by 1 start with 1 nocache;
