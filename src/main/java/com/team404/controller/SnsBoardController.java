@@ -261,6 +261,7 @@ public class SnsBoardController {
 		return result;
 	}
 	
+	//파일다운로드
 	@ResponseBody
 	@RequestMapping("download/{fileLoca}/{fileName:.+}")
 	public ResponseEntity<byte[]> download(@PathVariable("fileLoca") String fileLoca,
