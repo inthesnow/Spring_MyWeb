@@ -1,5 +1,7 @@
 package com.team404.sns.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,12 @@ public class SnsServiceImpl implements SnsService{
 	public int insert(SnsVO vo) {
 	
 		return snsMapper.insert(vo);
+	}
+
+	@Override
+	public ArrayList<SnsVO> getList() {
+		// TODO Auto-generated method stub
+		return snsMapper.getList();
 	}
 	
 }

@@ -155,6 +155,7 @@
 					return;
 				}
 				
+				
 				//비동기형식의 폼데이터 사용
 				var formData = new FormData();
 				
@@ -182,9 +183,53 @@
 					error : function(status, error) {
 						alert("서버 문제가 발생했습니다. 관리자에게 문의하세요.");
 					}
-				})
+				});
 			});
-		});
+			function getList(){
+				var strAdd =""
+				$.getJSON("getList", function(data) {
+					console.log(data);
+					for(var i=0;i<data.length;i++) {
+						strAdd+='for(var i=0;i<data.lengtth;i++){';
+						strAdd+='	<div id="contentDiv">';
+						strAdd+='	<div class="title-inner">';
+						strAdd+='		<!--제목영역-->';
+						strAdd+='		<div class="profile">';
+						strAdd+='			<img src="../resources/img/profile.png">';
+						strAdd+='		</div>';
+						strAdd+='		<div class="title">';
+						strAdd+='			<p>'+data[i].writer+'</p>';
+						strAdd+='			<small>'+data[i].regdate+'</small>';
+						strAdd+='		</div>';
+						strAdd+='	</div>';
+						strAdd+='	<div class="content-inner">';
+						strAdd+='		<!--내용영역-->';
+						strAdd+='		<p>'+data[i].content+'</p>';
+						strAdd+='	</div>';
+						strAdd+='	<div class="image-inner">';
+						strAdd+='		<!-- 이미지영역 -->';
+						strAdd+='		<img src="view/'+data[i].uploadPath+'/'+data[i].fileName+'">';
+						strAdd+='	</div>';
+						strAdd+='	<div class="like-inner">';
+						strAdd+='		<!--좋아요-->';
+						strAdd+='		<img src="../resources/img/icon.jpg"> <span>522</span>';
+						strAdd+='	</div>';
+						strAdd+='	<div class="link-inner">';
+						strAdd+='		<a href="##"><i class="glyphicon glyphicon-thumbs-up"></i>좋아요</a>';
+						strAdd+='		<a href="##"><i class="glyphicon glyphicon-comment"></i>댓글달기</a> ';
+						strAdd+='		<a href="##"><i class="glyphicon glyphicon-remove"></i>삭제하기</a>';
+						strAdd+='	</div>';
+						strAdd+='	</div>';
+					}
+				});
+				$("#contenDiv").html(strAdd);
+			}
+
+			(function() {
+				getList();
+			})();
+			});
+		
 	</script>
 
 	<script>

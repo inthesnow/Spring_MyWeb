@@ -1,6 +1,7 @@
 package com.team404.controller;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +30,8 @@ import com.team404.command.SnsVO;
 import com.team404.command.UserVO;
 import com.team404.command.uploadVO;
 import com.team404.sns.service.SnsService;
+
+import lombok.val;
 
 @Controller
 @RequestMapping("sns")
@@ -206,4 +214,69 @@ public class SnsBoardController {
 		}
 	}
 	
+	//조회요청
+	@ResponseBody
+	@RequestMapping(value = "/getList", method = RequestMethod.GET)
+	public ArrayList<SnsVO> getList() {
+		
+		ArrayList<SnsVO> list = snsService.getList();
+		
+		return list;
+	}
+	
+	//이미지 데이터 반환
+//	@ResponseBody
+//	@RequestMapping(value = "view/{fileLoca}/{fileName:.+}")//경로에 특수문자를 허용
+//	public byte[] view(@PathVariable("fileLoca") String fileLoca,
+//					   @PathVariable("fileName") String fileName) {
+//		byte[] result=null;
+//		
+//		try {
+//		File file = new File(APP_CONSTANT.UPLOAD_PATH+"\\"+fileLoca+"\\"+fileName);
+//		result = FileCopyUtils.copyToByteArray(file);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return result;
+//	}
+	//이미지데이터의 반환 2nd
+	@ResponseBody
+	@RequestMapping(value = "view/{fileLoca}/{fileName:.+}")//경로에 특수문자를 허용
+	public ResponseEntity<byte[]> view(@PathVariable("fileLoca") String fileLoca,
+					   @PathVariable("fileName") String fileName) {
+		ResponseEntity<byte[]> result=null;
+		
+		try {
+		File file = new File(APP_CONSTANT.UPLOAD_PATH+"\\"+fileLoca+"\\"+fileName);
+		
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-type", Files.probeContentType(file.toPath()));
+		
+		result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("download/{fileLoca}/{fileName:.+}")
+	public ResponseEntity<byte[]> download(@PathVariable("fileLoca") String fileLoca,
+										   @PathVariable("fileName") String fileName) {
+		
+		ResponseEntity<byte[]> result = null;
+		try {
+			File file = new File(APP_CONSTANT.UPLOAD_PATH+"\\"+fileLoca+"\\"+fileName);
+			HttpHeaders header = new HttpHeaders();
+			header.add("Content-Disposition", "attachment; fileName="+fileName);
+			
+			result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }
