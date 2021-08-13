@@ -12,4 +12,5 @@ public class TestVO {
 	private String age;
 	private String date;
 	private int birth;
+
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.team404.sns.mapper.SnsMapper">
+	  <insert id="insert">
+		insert into snsBoard(bno, writer, content, uploadpath, fileLoca, fileName, fileRealName)
+		values(snsBoard_SEQ.nextval, #{writer}, #{content}, #{uploadPath}, #{fileLoca} #{fileName}, #{fileRealName})
+	  </insert>
+	  <select id="getList" resultType="SnsVO">
+	  	select * from snsboard order by bno desc
+	  </select>
+	  
+  </mapper>

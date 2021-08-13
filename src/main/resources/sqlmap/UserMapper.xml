@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.team404.user.mapper.UserMapper">
+  	<select id="idCheck" resultType="int">
+  		select count(*) as result
+  		from users where userId = #{userId}
+  	</select>
+  	<insert id="join">
+  		insert into users(userId, userPw, userName, userEmail1, userEmail2, addrZipNum, addrBasic, addrDetail)
+  		values(#{userId}, #{userPw}, #{userName}, #{userEmail1}, #{userEmail2}, #{addrZipNum}, #{addrBasic}, #{addrDetail})
+  	</insert>
+  	<select id="login" resultType="UserVO">
+  		select * from users where userId = #{userId} and userPw = #{userPw}
+  	</select>
+  	<!-- 1:N테이블의 조인구문에서는 select의 반환 결과를 resultMap속성을 이용해서 직접지정 -->
+  	<select id="getInfo" resultMap="userInfo">
+  		select userId,
+		       userName,
+       		   userEmail1,
+       		   userEmail2,
+       		   addrZipnum,
+       		   addrBasic,
+       		   addrDetail,
+       		   f.bno,
+       		   f.title,
+			   f.regdate
+		from users u 
+		left outer join freeboard f 
+		on u.userid = f.writer
+		where u.userid= #{userId};
+  	</select>
+  	
+  	<!-- resultMap태그에서는 vo의 맵핑형태를 처리. -->
+  	<!-- type에는 결과를 반환받을 vo의 전체경로, id는 위에서 지정한 resultMap의 이름 -->
+  	<!-- property에는 vo객체의 setter, colume에는 DB의 컬럼명이 들어갑니다. -->
+	<resultMap id="userInfo" type="UserVO">
+		<result column="USERID" property="userId" />
+		<result column="USERNAME" property="userName" />
+		<result column="USEREMAIL1" property="userEmail1" />
+		<result column="USEREMAIL2" property="userEmail2" />
+		<result column="ADDRZIPNUM" property="addrZipNum" />
+		<result column="ADDRBASIC" property="addrBasic" />
+		<result column="ADDRDETAIL" property="addrDetail" />
+		<collection resultMap="boardList" property="userBoardList" />
+	</resultMap>
+	<resultMap id="boardList" type="FreeBoardVO">
+		<result column="BNO" property="bno" />
+		<result column="TITLE" property="title" />
+		<result column="REGDATE" property="regdate" />
+	</resultMap>
+  </mapper>

@@ -34,7 +34,7 @@
 
                             <button type="button" class="btn btn-dark" onclick="location.href='freeList'">목록</button>    
                             <button type="submit" class="btn btn-primary">변경</button>
-                            <button type="button" class="btn btn-info" onclick="location.href='freeDelete?bno=${boardVO.bno}'">삭제</button>
+                            <button type="button" class="btn btn-info" onclick="location.href='freeDelete?bno=${boardVO.bno}&writer=${boardVO.writer }'">삭제</button>
                     </form>
                                     
                 </div>

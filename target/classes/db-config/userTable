@@ -1,0 +1,11 @@
+create table users (
+    userId VARCHAR2(50) primary key,
+    userPw VARCHAR2(50) not null,
+    userName VARCHAR2(50) not null,
+    userEmail1 VARCHAR2(50),
+    userEmail2 VARCHAR2(50),
+    userZipNum VARCHAR2(50),
+    userBasic VARCHAR2(300),
+    userDetail VARCHAR2(300),
+    regdate date default sysdate
+    );
