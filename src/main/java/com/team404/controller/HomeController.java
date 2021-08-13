@@ -1,11 +1,17 @@
 package com.team404.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,10 +34,37 @@ public class HomeController {
 	}
 	
 	//타일즈 템플릿 요청
-	@RequestMapping("/aaa")
-	public String aaa() {
-		return "test/aaa";
-	}
+	@GetMapping("/aaa")
+    public String callApi() throws IOException {
+        StringBuilder result = new StringBuilder();
+
+        String urlStr = 
+        		"http://www.mygreenery.co.kr/ajax_local_callback.jsp;" +
+        		"09DTPDKUPHLJTUORKIJSFQ?" +
+                "garden" +
+                "lightList" +
+                "nongsaroApiLoadingArea" +
+                "&type=json";
+        URL url = new URL(urlStr);
+        System.out.println("url : " + url);
+        System.out.println("urlStr : " + urlStr);
+
+        HttpURLConnection urlConnection = (HttpURLConnection)  url.openConnection();
+        urlConnection.setRequestMethod("GET");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+
+        String returnLine;
+
+        while ((returnLine = br.readLine()) != null ) {
+            result.append(returnLine+"\n\r");
+        }
+
+        urlConnection.disconnect();
+        System.out.println(result.toString());
+
+        return "test/aaa";
+    }
 	@RequestMapping("/bbb")
 	public String bbb() {
 		return "test/bbb";
