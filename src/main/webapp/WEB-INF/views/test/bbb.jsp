@@ -13,5 +13,8 @@
 		nongsaroOpenApiRequest.callback = "http://www.mygreenery.co.kr/ajax_local_callback.jsp";
 	</script>
 
+	<div style="height:300px;">헤에더어어어어어</div>
+	<div>검색데이터</div>
 	<div id="nongsaroApiLoadingArea"></div><!-- 검색 HTML 로딩 영역 -->
+	<div>검색결과데이터</div>
 	<div id="nongsaroApiLoadingAreaResult"></div><!-- 검색결과 HTML 로딩 영역 -->

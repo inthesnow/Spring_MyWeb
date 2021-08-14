@@ -35,15 +35,14 @@ public class HomeController {
 	
 	//타일즈 템플릿 요청
 	@GetMapping("/aaa")
-    public String callApi() throws IOException {
+    public String callApi(Model model) throws IOException {
         StringBuilder result = new StringBuilder();
 
         String urlStr = 
-        		"http://www.mygreenery.co.kr/ajax_local_callback.jsp;" +
-        		"09DTPDKUPHLJTUORKIJSFQ?" +
-                "garden" +
-                "lightList" +
-                "nongsaroApiLoadingArea" +
+        		"http://api.nongsaro.go.kr/service" +
+                "/garden" +
+                "/lightList?" +
+                "/apiKey=09DTPDKUPHLJTUORKIJSFQ?" +
                 "&type=json";
         URL url = new URL(urlStr);
         System.out.println("url : " + url);
@@ -62,6 +61,7 @@ public class HomeController {
 
         urlConnection.disconnect();
         System.out.println(result.toString());
+        model.addAttribute("apiUrl", result.toString());
 
         return "test/aaa";
     }
